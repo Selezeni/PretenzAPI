@@ -1,15 +1,15 @@
 import uvicorn
 from fastapi import FastAPI
-from db.models import create_tables
-from contextlib import asynccontextmanager
+#from db.models import create_tables
+#from contextlib import asynccontextmanager
 from routers import router as pretenz_router
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    await create_tables()
-    yield
-    print("Перезагрузка приложения")
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     await create_tables()
+#     yield
+#     print("Перезагрузка приложения")
 
 
 app = FastAPI(title="AvestaPretenzAPI", lifespan=lifespan)
