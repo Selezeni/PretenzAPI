@@ -6,3 +6,6 @@ class Pretenz(BaseModel):
     matcode: int
     kolvo: int
 
+
+class PretenzAdd(Pretenz):
+    vcode: int

@@ -1,38 +1,23 @@
 import uvicorn
-from fastapi import FastAPI
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
-
+from typing import Annotated
+from fastapi import FastAPI, Depends
 from app.models.models import Pretenz
-from DB.schema import Avesta
+from db.models import PdAct, create_tables, new_session
+from contextlib import asynccontextmanager
+from routers import router as pretenz_router
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await create_tables()
+    yield
+    print("Перезагрузка приложения")
+
+
+app = FastAPI(title="AvestaPretenzAPI", lifespan=lifespan)
+app.include_router(pretenz_router)
 
 
 
-app = FastAPI()
-engine = create_engine('sqlite:///DB/avesta.db', echo=True)
-
-
-@app.get("/")
-async def root():
-    with Session(bind=engine) as session:
-        pretenz = session.query(Avesta).all()
-
-    return pretenz
-
-
-@app.post("/")
-async def root(pretenz: Pretenz):
-
-    # new_pretenz = Avesta(nomer = pretenz["nomer"], 
-    #                         matcode = pretenz["matcode"],
-    #                         kolvo = pretenz["kolvo"])
-    
-    print(pretenz.json())
-    return {"message": f"Претензия успешно добавлена {pretenz.nomer}"}
-
-
-
-
-if __name__ == '__main__':
-    
+if __name__ == '__main__':    
     uvicorn.run(app, host='127.0.0.1', port=8000)
