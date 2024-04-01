@@ -11,7 +11,7 @@ router = APIRouter(
 @router.post("")
 async def add_new_pretenz(
     pretenz: Annotated[Pretenz, Depends()]
-    ) -> dict:
+    ) -> list[dict]:
     vcode = await PretenzRepo.add_pretenz(pretenz)
     return {"sattus": "200 ok", "document": vcode}
 

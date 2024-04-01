@@ -1,8 +1,6 @@
 import uvicorn
-from typing import Annotated
-from fastapi import FastAPI, Depends
-from app.models.models import Pretenz
-from db.models import PdAct, create_tables, new_session
+from fastapi import FastAPI
+from db.models import create_tables
 from contextlib import asynccontextmanager
 from routers import router as pretenz_router
 
