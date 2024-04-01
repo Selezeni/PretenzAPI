@@ -12,7 +12,7 @@ from routers import router as pretenz_router
 #     print("Перезагрузка приложения")
 
 
-app = FastAPI(title="AvestaPretenzAPI", lifespan=lifespan)
+app = FastAPI(title="AvestaPretenzAPI")
 app.include_router(pretenz_router)
 
 
